@@ -1,6 +1,8 @@
 from radar.simulator import generate_pulse
-from visualizations.plotResults import plotPulse
+import matplotlib.pyplot as plt
+from visualizations.plotResults import *
 
-pulse, time = generate_pulse()
+frequencies = [5e3, 50e3, 200e3]
 
-plotPulse(pulse, time)
+plotSeveralPulses(frequencies=frequencies)
+
