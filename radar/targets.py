@@ -16,14 +16,14 @@ def simulate_echoes(pulse, sample_rate, targets, noise_std=0.0):
     - t: Time axis
     """
 
-    max_distance = max([d for d, _ in targets])
+    max_distance = max([d for d in targets])
     max_delay = 2 * max_distance / 3e8
     duration = max_delay + len(pulse) / sample_rate
     total_samples = int(duration * sample_rate)
 
     received_signal = np.zeros(total_samples)
 
-    for distance, amplitude in targets:
+    for distance in targets:
         
         amplitude = 1 / ((2 * distance) ** 2) # Attenuate signal strength proportional to distance traveled
 

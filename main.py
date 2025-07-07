@@ -13,13 +13,12 @@ DURATION = 2e-6 # 2 μs
 pulse, pulse_time = generate_pulse(frequency=FREQ, duration=DURATION, sample_rate=SAMPLE_RATE)
 plotPulse(pulse, pulse_time, "Simulated Pulse")
 
-
 targets = [
-    (1700, 1.0),
-    (3930, 1.0),
-    (6143, 1.0)
+    1700,
+    3930,
+    6143
 ]
 
-received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=0)
+received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=3e-9)
 plotPulse(received_signal, echo_time, "Full Received Radar Signal (Echoes)")
 
