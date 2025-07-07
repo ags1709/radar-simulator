@@ -9,6 +9,3 @@ def generate_pulse(frequency=5e3, duration=0.1e-3, sample_rate=1e6):
     t = np.arange(0, duration, 1/sample_rate)
     pulse = np.sin(2 * np.pi * frequency * t)
     return pulse, t
-
-pulse, time = generate_pulse()
-

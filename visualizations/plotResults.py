@@ -2,11 +2,11 @@ import matplotlib.pyplot as plt
 from radar.simulator import generate_pulse
 
 
-def plotPulse(pulse, time):
-    plt.plot(time, pulse)
-    plt.xlabel("Time (ms)")
+def plotPulse(pulse, time, title):
+    plt.plot(time * 1e6, pulse)
+    plt.xlabel("Time (μs)")
     plt.ylabel("Amplitude")
-    plt.title("Simulated Pulse")
+    plt.title(title)
     plt.grid(True)
     plt.show()
 

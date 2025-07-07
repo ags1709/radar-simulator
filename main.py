@@ -1,8 +1,23 @@
 from radar.simulator import generate_pulse
+from radar.targets import *
 import matplotlib.pyplot as plt
 from visualizations.plotResults import *
 
-frequencies = [5e3, 50e3, 200e3]
+SAMPLE_RATE = 1e8 # 100 MHz
+FREQ = 1e6 # 1 MHz
+DURATION = 2e-6 # 2 μs
 
-plotSeveralPulses(frequencies=frequencies)
+
+pulse, pulse_time = generate_pulse(frequency=FREQ, duration=DURATION, sample_rate=SAMPLE_RATE)
+plotPulse(pulse, pulse_time, "Simulated Pulse")
+
+
+targets = [
+    (1700, 1.0),
+    (3930, 1.0),
+    (6143, 1.0)
+]
+
+received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=0)
+plotPulse(received_signal, echo_time, "Full Received Radar Signal (Echoes)")
 
