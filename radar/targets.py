@@ -25,7 +25,7 @@ def simulate_echoes(pulse, sample_rate, targets, noise_std=0.0):
 
     for distance, amplitude in targets:
         
-        amplitude = 1 / (distance ** 2) # Attenuate signal strength proportional to distance traveled
+        amplitude = 1 / ((2 * distance) ** 2) # Attenuate signal strength proportional to distance traveled
 
         delay = 2 * distance / 3e8
         delay_samples = int(delay * sample_rate)
@@ -35,7 +35,6 @@ def simulate_echoes(pulse, sample_rate, targets, noise_std=0.0):
         
         # Add scaled, delayed pulse
         received_signal[delay_samples:delay_samples+len(pulse)] += amplitude * pulse
-        print(f"Target at {distance}m → delay {delay*1e6:.2f} µs → sample index {delay_samples}")
 
     # Add noise
     if noise_std > 0.0:

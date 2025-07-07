@@ -8,6 +8,8 @@ FREQ = 1e6 # 1 MHz
 DURATION = 2e-6 # 2 μs
 
 
+# TODO: Throw both the transmit signal and echo visualization into a single figure
+
 pulse, pulse_time = generate_pulse(frequency=FREQ, duration=DURATION, sample_rate=SAMPLE_RATE)
 plotPulse(pulse, pulse_time, "Simulated Pulse")
 
