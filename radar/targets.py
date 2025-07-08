@@ -18,7 +18,7 @@ def simulate_echoes(pulse, sample_rate, targets, noise_std=0.0):
 
     max_distance = max([d for d in targets])
     max_delay = 2 * max_distance / 3e8
-    duration = max_delay + len(pulse) / sample_rate
+    duration = 5e-6 + max_delay + len(pulse) / sample_rate
     total_samples = int(duration * sample_rate)
 
     received_signal = np.zeros(total_samples)
