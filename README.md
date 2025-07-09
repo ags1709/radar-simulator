@@ -14,9 +14,12 @@ This project simulates a basic radar system that emits pulses, receives echoes f
 
 
 ## Theory
+Linear Frequency-Modulated chirp (Very good range resolution)
 Range
-PRF -> max range
+Range resolution (ΔR = c / (2B))
 SNR
+PRF -> max range
+Tradeoff between SNR and range resolution
 Matched filter
 Velocity /+ max unambigious velocity
 

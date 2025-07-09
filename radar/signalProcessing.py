@@ -16,7 +16,8 @@ def matched_filter(received_signal, pulse):
     - output: Matched filter output (correlation result)
     """
     # Time-reverse and conjugate the pulse (real signal so conjugate = same)
-    matched_pulse = pulse[::-1]
+    matched_pulse = np.conjugate(pulse[::-1])
+    # conjugate = np.conjugate(matched_pulse)
     
     # Calculate convolution of received signal with matched pulse
     output = np.convolve(received_signal, matched_pulse, mode='same')
@@ -25,7 +26,7 @@ def matched_filter(received_signal, pulse):
 
 
 
-def simple_peak_detector(signal, threshold=0.03, distance=2000):
+def simple_peak_detector(signal, threshold=0.07, distance=100):
     """
     Find strong peaks above threshold, separated by some minimum distance.
     """
@@ -58,7 +59,6 @@ def simple_cfar(signal, num_train=10, num_guard=2, rate=5):
             peaks.append(i)
     
     return np.array(peaks)
-
 
 
 
