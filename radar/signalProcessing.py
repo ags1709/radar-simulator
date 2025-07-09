@@ -1,4 +1,8 @@
+from scipy.signal import find_peaks
 import numpy as np
+
+
+
 
 def matched_filter(received_signal, pulse):
     """
@@ -17,6 +21,20 @@ def matched_filter(received_signal, pulse):
     # Calculate convolution of received signal with matched pulse
     output = np.convolve(received_signal, matched_pulse, mode='same')
     return output
+
+
+
+
+def simple_peak_detector(signal, threshold=0.03, distance=2000):
+    """
+    Find strong peaks above threshold, separated by some minimum distance.
+    """
+    abs_signal = np.abs(signal)
+    norm = abs_signal / np.max(abs_signal)
+    peaks, _ = find_peaks(norm, height=threshold, distance=distance)
+    return peaks
+
+
 
 
 def simple_cfar(signal, num_train=10, num_guard=2, rate=5):
@@ -43,15 +61,6 @@ def simple_cfar(signal, num_train=10, num_guard=2, rate=5):
 
 
 
-from scipy.signal import find_peaks
 
-def simple_peak_detector(signal, threshold=0.03, distance=2000):
-    """
-    Find strong peaks above threshold, separated by some minimum distance.
-    """
-    abs_signal = np.abs(signal)
-    norm = abs_signal / np.max(abs_signal)
-    peaks, _ = find_peaks(norm, height=threshold, distance=distance)
-    return peaks
 
 

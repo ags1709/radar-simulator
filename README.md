@@ -7,14 +7,33 @@ This project simulates a basic radar system that emits pulses, receives echoes f
 - Target reflection modeling
 - Additive noise
 - Signal processing (Matched filter + simple peak detection)
+- Accurate range calculations
 - Visualization of detections
 
 
 
 
-#### Project notes:
+## Theory
+Range
+PRF -> max range
+SNR
+Matched filter
+Velocity /+ max unambigious velocity
+
+
+## TO-DO
+More realistic transmit signals, chirp or whatever it is real radars do
+Simulate moving targets and calculate velocity using the doppler effect
+Improved visualizations +/ dashboard?
+Instead of simply doing 1 pulse, do many? This might also enable pulse integration (add signals together until echo signal rises above noise)
+Optimize some parts using c/c++
+Do 2d/3d simulation instead of 1d?
+
+
+## Project notes:
 Distance calculations were off by roughly ~150m due to using the center of the matched filtered pulses for the distance calculations instead of the beginning.
 After taking that into consideration calculated distances are within 2 meters of the real distances.
 
+radar range: R = c * t / 2
 
 

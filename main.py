@@ -30,12 +30,6 @@ plotPulse(mf_output, echo_time, "Matched Filter Output")
 peaks = simple_peak_detector(mf_output, threshold=0.04, distance=2000)
 plot_signal_with_peaks(mf_output, echo_time, peaks, title="Signal with Detected Peaks")
 
-# Calculate distances
-# peak_times = peaks / SAMPLE_RATE  # convert from samples to time (1e6 = sample rate)
-
-# # # Convert time to distance
-# distances = (peak_times * 3e8) / 2  # divide by 2 for round trip
-
 
 # Since we are detecting echoes as the center of the matched filtered pulse, we will need to correct for that.
 # Correct for matched filter delay
