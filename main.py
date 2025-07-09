@@ -21,13 +21,13 @@ targets = [
     6143
 ]
 
-received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=1e-8)
+received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=3e-8)
 plotPulse(received_signal, echo_time, "Full Received Radar Signal")
 
 mf_output = matched_filter(received_signal=received_signal, pulse=pulse)
 plotPulse(mf_output, echo_time, "Matched Filter Output")
 
-peaks = simple_peak_detector(mf_output, threshold=0.03, distance=2000)
+peaks = simple_peak_detector(mf_output, threshold=0.04, distance=2000)
 plot_signal_with_peaks(mf_output, echo_time, peaks, title="Signal with Detected Peaks")
 
 # Calculate distances
