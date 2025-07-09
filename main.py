@@ -1,11 +1,11 @@
 from radar.simulator import generate_pulse
 from radar.targets import *
-from radar.signalProcessing import matched_filter
+from radar.signalProcessing import *
 import matplotlib.pyplot as plt
 from visualizations.plotResults import *
 
 
-SAMPLE_RATE = 10e8 # 100 MHz
+SAMPLE_RATE = 1e9 # 1 GHz
 FREQ = 1e6 # 1 MHz
 DURATION = 2e-6 # 2 μs
 
@@ -27,15 +27,12 @@ plotPulse(received_signal, echo_time, "Full Received Radar Signal")
 mf_output = matched_filter(received_signal=received_signal, pulse=pulse)
 plotPulse(mf_output, echo_time, "Matched Filter Output")
 
-# ---------------------------------------------------------------------------------------------
-# Calculate distances
+peaks = simple_peak_detector(mf_output, threshold=0.03, distance=2000)
+plot_signal_with_peaks(mf_output, echo_time, peaks, title="Signal with Detected Peaks")
 
-# from scipy.signal import find_peaks
-# print(f"Filtered output: {mf_output}")
-# peaks, _ = find_peaks(mf_output, height=1e-6)  # Tune threshold
-# print(f"Peaks: {peaks}")
-# peak_times = peaks / SAMPLE_RATE  # convert from samples to time (1e6 = sample rate)
+# Calculate distances
+peak_times = peaks / SAMPLE_RATE  # convert from samples to time (1e6 = sample rate)
 
 # # Convert time to distance
-# distances = (peak_times * 3e8) / 2  # divide by 2 for round trip
-# print("Detected distances (m):", distances)
+distances = (peak_times * 3e8) / 2  # divide by 2 for round trip
+print("Detected distances (m):", distances)
