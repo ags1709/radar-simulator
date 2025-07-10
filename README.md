@@ -25,7 +25,6 @@ Velocity /+ max unambigious velocity
 
 
 ## TO-DO
-More realistic transmit signals, chirp or whatever it is real radars do
 Simulate moving targets and calculate velocity using the doppler effect
 Improved visualizations +/ dashboard?
 visualize the received signal as more and more pulses are added together
