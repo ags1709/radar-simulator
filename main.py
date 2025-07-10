@@ -36,6 +36,9 @@ targets = [
 received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=3e-7)
 plotPulse(received_signal, echo_time, "Received Radar Signal (Single Pulse)")
 
+mf_out = matched_filter(received_signal=received_signal, pulse=pulse)
+plotPulse(mf_out, echo_time, "Matched Filter Output (Single Pulse)")
+
 # Use several pulses and add them together to help raise signal out of noise
 N_pulses = 128
 range_lines = []
@@ -50,7 +53,7 @@ plotPulse(integrated, echo_time, "Matched Filter Output after pulse integration"
 # peaks = simple_peak_detector(integrated, threshold=0.07, distance=20)
 peaks = ca_cfar_peak(signal=integrated, num_train=35, num_guard=5, pfa=8e-3, peak_guard=2)
 # peaks = simple_cfar(signal=integrated, num_train=100, num_guard=2, rate=5)
-plot_signal_with_peaks(integrated, echo_time, peaks, title="Signal with Detected Peaks")
+plot_signal_with_peaks(integrated, echo_time, peaks, title="Final Signal with Detected Peaks")
 
 
 # Since we are detecting echoes as the center of the matched filtered pulse, we will need to correct for that.
