@@ -29,9 +29,10 @@ Simulate moving targets and calculate velocity using the doppler effect
 Improved visualizations +/ dashboard?
 visualize the received signal as more and more pulses are added together
 Optimize some parts using c/c++
-Do 2d/3d simulation instead of 1d?
-Radar cross section
+Do 2d/3d simulation instead of 1d? Transmit in different directions? Sweep 360 degrees?
+Radar cross section?
 Complex gaussian noise?
+Better visualize the complex transmit signal?
 
 
 ## Project notes:

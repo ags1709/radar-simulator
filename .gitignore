@@ -2,3 +2,4 @@ pycache/
 *.pyc
 data/
 outputs/*
+thingsToUnderstandBetter.txt
