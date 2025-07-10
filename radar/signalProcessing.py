@@ -37,40 +37,19 @@ def simple_peak_detector(signal, threshold=0.07, distance=100):
 
 
 
-
-def simple_cfar(signal, num_train=10, num_guard=2, rate=5):
-    """
-    Simple 1D CFAR detector
-    """
+def ca_cfar_peak(signal, num_train=35, num_guard=5, pfa=5e-4, peak_guard=2):
+    """CA-CFAR that returns only the local maximum of each target blob."""
+    abs_x = np.abs(signal)
     n = len(signal)
+    alpha = num_train * (pfa ** (-1/num_train) - 1)
     peaks = []
-
-    for i in range(num_train + num_guard, n - num_train - num_guard):
-        # Training cells on both sides, excluding guard cells
-        training_cells = np.concatenate([
-            np.abs(signal[i - num_train - num_guard:i - num_guard]),
-            np.abs(signal[i + num_guard:i + num_guard + num_train])
-        ])
-        noise_level = np.mean(training_cells)
-        # noise_level = np.median(training_cells)
-        threshold = rate * noise_level  # scaling factor
-
-        if np.abs(signal[i]) > threshold:
-            peaks.append(i)
-    
+    for k in range(num_train + num_guard, n - num_train - num_guard):
+        # 1) build threshold
+        noise = np.concatenate([abs_x[k-num_guard-num_train:k-num_guard],
+                                abs_x[k+num_guard+1:k+num_guard+num_train+1]])
+        thresh = alpha * np.mean(noise)
+        # 2) detection + local-max check (peak_guard ≈ half main-lobe width)
+        if abs_x[k] > thresh and abs_x[k] == abs_x[k-peak_guard:k+peak_guard+1].max():
+            peaks.append(k)
     return np.array(peaks)
-
-
-def ca_cfar(x, guard=4, train=12, pfa=1e-6):
-    alpha = train * (pfa ** (-1/train) - 1)          # cell-averaging factor
-    peaks = []
-    for i in range(train + guard, len(x) - train - guard):
-        noise = np.mean(np.abs(x[i-train-guard:i-guard]))
-        thresh = alpha * noise
-        if np.abs(x[i]) > thresh:
-            peaks.append(i)
-    return np.array(peaks)
-
-
-
 

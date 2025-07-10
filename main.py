@@ -29,10 +29,11 @@ plotPulse(pulse, t_pulse, "Simulated Pulse")
 targets = [
     1700,
     3930,
-    6027
+    6027,
+    7291,
 ]
 
-received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=3e-8)
+received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=3e-15)
 # # received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=0)
 # plotPulse(received_signal, echo_time, "Full Received Radar Signal")
 
@@ -44,17 +45,19 @@ received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, tar
 # plot_signal_with_peaks(mf_output, echo_time, peaks, title="Signal with Detected Peaks")
 
 # Use several pulses and add them together to help raise signal out of noise
-N_pulses = 32
+N_pulses = 128
 range_lines = []
 for _ in range(N_pulses):
-    echoes, _ = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=3e-8)
+    echoes, _ = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=3e-15)
     range_lines.append(matched_filter(echoes, pulse))
 rd_matrix = np.vstack(range_lines)          # shape (N_pulses, N_rng)
 integrated = np.sum(rd_matrix, axis=0)      # coherent sum
 plotPulse(integrated, echo_time, "Matched Filter Output after pulse integration")
 
 
-peaks = simple_peak_detector(integrated, threshold=0.07, distance=20)
+# peaks = simple_peak_detector(integrated, threshold=0.07, distance=20)
+peaks = ca_cfar_peak(signal=integrated, num_train=35, num_guard=5, pfa=5e-4, peak_guard=2)
+# peaks = simple_cfar(signal=integrated, num_train=100, num_guard=2, rate=5)
 plot_signal_with_peaks(integrated, echo_time, peaks, title="Signal with Detected Peaks")
 
 
