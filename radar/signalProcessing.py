@@ -61,6 +61,16 @@ def simple_cfar(signal, num_train=10, num_guard=2, rate=5):
     return np.array(peaks)
 
 
+def ca_cfar(x, guard=4, train=12, pfa=1e-6):
+    alpha = train * (pfa ** (-1/train) - 1)          # cell-averaging factor
+    peaks = []
+    for i in range(train + guard, len(x) - train - guard):
+        noise = np.mean(np.abs(x[i-train-guard:i-guard]))
+        thresh = alpha * noise
+        if np.abs(x[i]) > thresh:
+            peaks.append(i)
+    return np.array(peaks)
+
 
 
 

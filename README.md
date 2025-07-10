@@ -28,9 +28,11 @@ Velocity /+ max unambigious velocity
 More realistic transmit signals, chirp or whatever it is real radars do
 Simulate moving targets and calculate velocity using the doppler effect
 Improved visualizations +/ dashboard?
-Instead of simply doing 1 pulse, do many? This might also enable pulse integration (add signals together until echo signal rises above noise)
+visualize the received signal as more and more pulses are added together
 Optimize some parts using c/c++
 Do 2d/3d simulation instead of 1d?
+Radar cross section
+Complex gaussian noise?
 
 
 ## Project notes:
