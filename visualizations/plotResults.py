@@ -33,3 +33,29 @@ def plot_signal_with_peaks(signal, time, peaks, title="Signal with Detected Peak
     plt.legend()
     plt.tight_layout()
     plt.show()
+
+
+
+def plot_complex_pulse(pulse, t, title="Complex Pulse"):
+    fig, ax = plt.subplots(3, 1, sharex=True, figsize=(10, 6))
+
+    # (1) I and Q channels
+    ax[0].plot(t*1e6, np.real(pulse), label="Real (I)")
+    ax[0].plot(t*1e6, np.imag(pulse), label="Imag (Q)", alpha=0.7)
+    ax[0].set_ylabel("Amplitude")
+    ax[0].legend(loc="upper right")
+    ax[0].set_title(title + " – I/Q components")
+
+    # (2) Envelope
+    ax[1].plot(t*1e6, np.abs(pulse))
+    ax[1].set_ylabel("|s(t)|")
+
+    # (3) Instantaneous frequency f(t) = 1/(2π) · dφ/dt
+    phase = np.unwrap(np.angle(pulse))
+    inst_freq = np.diff(phase) / (2*np.pi*np.diff(t))
+    ax[2].plot(t[1:]*1e6, inst_freq/1e6)      # MHz for readability
+    ax[2].set_ylabel("f_inst [MHz]")
+    ax[2].set_xlabel("Time [µs]")
+
+    fig.tight_layout()
+    plt.show()

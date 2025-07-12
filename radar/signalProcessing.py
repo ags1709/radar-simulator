@@ -25,18 +25,6 @@ def matched_filter(received_signal, pulse):
 
 
 
-
-def simple_peak_detector(signal, threshold=0.07, distance=100):
-    """
-    Find strong peaks above threshold, separated by some minimum distance.
-    """
-    abs_signal = np.abs(signal)
-    norm = abs_signal / np.max(abs_signal)
-    peaks, _ = find_peaks(norm, height=threshold, distance=distance)
-    return peaks
-
-
-
 def ca_cfar_peak(signal, num_train=35, num_guard=5, pfa=5e-4, peak_guard=2):
     """CA-CFAR that returns only the local maximum of each target blob."""
     abs_x = np.abs(signal)

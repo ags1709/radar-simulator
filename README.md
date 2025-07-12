@@ -25,14 +25,13 @@ Velocity /+ max unambigious velocity
 
 
 ## TO-DO
-Simulate moving targets and calculate velocity using the doppler effect
+Complex gaussian noise
+Better visualize the complex transmit signal?
 Improved visualizations +/ dashboard?
 visualize the received signal as more and more pulses are added together
-Optimize some parts using c/c++
+Optimize some parts using c/c++?
 Do 2d/3d simulation instead of 1d? Transmit in different directions? Sweep 360 degrees?
 Radar cross section?
-Complex gaussian noise?
-Better visualize the complex transmit signal?
 
 
 ## Project notes:

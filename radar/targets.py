@@ -38,7 +38,12 @@ def simulate_echoes(pulse, sample_rate, targets, noise_std=0.0):
 
     # Add noise
     if noise_std > 0.0:
-        received_signal += np.random.normal(0, noise_std, size=received_signal.shape)
+        # received_signal += np.random.normal(0, noise_std, size=received_signal.shape)
+        # We want E[|n|²] = noise_std²  ⇒  σ_I = σ_Q = noise_std / √2
+        sigma = noise_std / np.sqrt(2)
+        noise = sigma * (np.random.normal(size=received_signal.shape) +
+                         1j * np.random.normal(size=received_signal.shape))
+        received_signal += noise
 
     t = np.arange(0, len(received_signal)) / sample_rate
 

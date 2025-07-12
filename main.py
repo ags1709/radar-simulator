@@ -23,14 +23,14 @@ pulse, t_pulse = generate_lfm_pulse(
         sample_rate=SAMPLE_RATE,
         window="hanning")
 
-
-plotPulse(pulse, t_pulse, "Simulated Pulse")
+plot_complex_pulse(pulse=pulse, t=t_pulse, title="Simulated lfm chirp")
+# plotPulse(pulse, t_pulse, "Simulated Pulse")
 
 targets = [
-    1700,
-    3930,
-    6027,
-    7291,
+    1723,
+    3956,
+    6096,
+    7219,
 ]
 
 received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=3e-7)
@@ -50,9 +50,7 @@ integrated = np.sum(rd_matrix, axis=0)      # coherent sum
 plotPulse(integrated, echo_time, "Matched Filter Output after pulse integration")
 
 
-# peaks = simple_peak_detector(integrated, threshold=0.07, distance=20)
 peaks = ca_cfar_peak(signal=integrated, num_train=35, num_guard=5, pfa=8e-3, peak_guard=2)
-# peaks = simple_cfar(signal=integrated, num_train=100, num_guard=2, rate=5)
 plot_signal_with_peaks(integrated, echo_time, peaks, title="Final Signal with Detected Peaks")
 
 
