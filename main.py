@@ -5,10 +5,6 @@ import matplotlib.pyplot as plt
 from visualizations.plotResults import *
 
 
-# SAMPLE_RATE = 1e9 # 1 GHz
-# FREQ = 1e6 # 1 MHz
-# DURATION = 2e-6 # 2 μs
-
 SAMPLE_RATE = 100e6       # 100 MHz ≥ 2·(B/2)=50 MHz
 BANDWIDTH   = 20e6        # 20 MHz sweep
 DURATION    = 10e-6       # 10 µs pulse
