@@ -1,72 +1,119 @@
-from radar.simulator import *
-from radar.targets import *
-from radar.signalProcessing import *
-import matplotlib.pyplot as plt
-from visualizations.plotResults import *
+"""
+Radar Signal Processing Simulator - Main Demonstration Script
+
+You can now control the run from the command line:
+
+    python main.py -s dense --show-pulse
+"""
+
+import argparse
+
+from radar.targets import create_target_scenario
+from visualizations.plotResults import (
+    plot_complex_pulse,
+    plot_comprehensive_results,
+)
+from radar.radarSimulator import RadarSimulator
 
 
-SAMPLE_RATE = 100e6       # 100 MHz ≥ 2·(B/2)=50 MHz
-BANDWIDTH   = 20e6        # 20 MHz sweep
-DURATION    = 10e-6       # 10 µs pulse
-
-# TODO: Throw both the transmit signal and echo visualization into a single figure
-
-# pulse, pulse_time = generate_pulse(frequency=FREQ, duration=DURATION, sample_rate=SAMPLE_RATE)
-pulse, t_pulse = generate_lfm_pulse(
-        start_freq=-BANDWIDTH/2,   # symmetric ±10 MHz sweep
-        bandwidth=BANDWIDTH,
-        duration=DURATION,
-        sample_rate=SAMPLE_RATE,
-        window="hanning")
-
-plot_complex_pulse(pulse=pulse, t=t_pulse, title="Simulated lfm chirp")
-# plotPulse(pulse, t_pulse, "Simulated Pulse")
-
-targets = [
-    1723,
-    3956,
-    6096,
-    7219,
-]
-
-received_signal, echo_time = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=3e-7)
-plotPulse(received_signal, echo_time, "Received Radar Signal (Single Pulse)")
-
-mf_out = matched_filter(received_signal=received_signal, pulse=pulse)
-plotPulse(mf_out, echo_time, "Matched Filter Output (Single Pulse)")
-
-# Use several pulses and add them together to help raise signal out of noise
-N_pulses = 128
-range_lines = []
-for _ in range(N_pulses):
-    echoes, _ = simulate_echoes(pulse, sample_rate=SAMPLE_RATE, targets=targets, noise_std=3e-7)
-    range_lines.append(matched_filter(echoes, pulse))
-rd_matrix = np.vstack(range_lines)          # shape (N_pulses, N_rng)
-integrated = np.sum(rd_matrix, axis=0)      # coherent sum
-plotPulse(integrated, echo_time, "Matched Filter Output after pulse integration")
+# ----------------------------------------------------------------------
+# CLI handling
+# ----------------------------------------------------------------------
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Radar signal‑processing pipeline demo"
+    )
+    parser.add_argument(
+        "-s",
+        "--scenario",
+        choices=["simple", "dense", "extended"],
+        default="dense",
+        help="Target distribution to simulate",
+    )
+    parser.add_argument(
+        "--show-pulse",
+        action="store_true",
+        help="Plot the transmitted LFM chirp",
+    )
+    return parser.parse_args()
 
 
-peaks = ca_cfar_peak(signal=integrated, num_train=35, num_guard=5, pfa=8e-3, peak_guard=2)
-plot_signal_with_peaks(integrated, echo_time, peaks, title="Final Signal with Detected Peaks")
+# ----------------------------------------------------------------------
+# Main simulation driver
+# ----------------------------------------------------------------------
+def main() -> None:
+    args = _parse_args()
+
+    print("RADAR SIGNAL PROCESSING SIMULATOR")
+    print("=" * 50)
+
+    # ------------------------------------------------------------------
+    # 1. Instantiate simulator
+    # ------------------------------------------------------------------
+    radar = RadarSimulator(
+        sample_rate=100e6,
+        bandwidth=20e6,
+        pulse_duration=10e-6,
+        n_pulses=128,
+        prf=5e3,
+    )
+
+    # ------------------------------------------------------------------
+    # 2. Create targets according to the chosen scenario
+    # ------------------------------------------------------------------
+    targets = create_target_scenario(args.scenario)
+    print(f"\nTarget Scenario: {args.scenario!r}")
+    print(f"Simulating {len(targets)} targets at ranges: {targets} m")
+
+    # ------------------------------------------------------------------
+    # 3. Generate one transmit pulse
+    # ------------------------------------------------------------------
+    pulse, t_pulse = radar.generate_pulse(window="hanning")
+
+    if args.show_pulse:
+        plot_complex_pulse(
+            pulse=pulse,
+            t=t_pulse,
+            title="Transmitted LFM Chirp (20 MHz bandwidth, 10 µs duration)",
+        )
+
+    # ------------------------------------------------------------------
+    # 4. Run the processing chain on a single pulse
+    # ------------------------------------------------------------------
+    print("\nProcessing single pulse…")
+    received_signal, mf_single, echo_time = radar.process_single_pulse(
+        pulse, targets, noise_std=3e-7
+    )
+
+    # ------------------------------------------------------------------
+    # 5. Coherently integrate many pulses
+    # ------------------------------------------------------------------
+    integrated, _ = radar.coherent_integration(pulse, targets, noise_std=3e-7)
+
+    # ------------------------------------------------------------------
+    # 6. CA‑CFAR detection and performance analysis
+    # ------------------------------------------------------------------
+    peaks, distances = radar.detect_targets(integrated, echo_time, len(pulse))
+    radar.analyze_performance(targets, distances)
+
+    # ------------------------------------------------------------------
+    # 7. Comprehensive visualisation
+    # ------------------------------------------------------------------
+    plot_comprehensive_results(
+        received_signal=received_signal,
+        mf_single=mf_single,
+        integrated=integrated,
+        n_pulses=radar.n_pulses,
+        echo_time=echo_time,
+        peaks=peaks,
+        distances=distances,
+        targets=targets,
+    )
+
+    print("\n" + "=" * 50)
+    print("SIMULATION COMPLETE")
+    print("=" * 50)
 
 
-# Since we are detecting echoes as the center of the matched filtered pulse, we will need to correct for that.
-# Correct for matched filter delay
-correction_samples = len(pulse) // 2
-corrected_peaks = peaks - correction_samples
-
-# Filter out any negative peak indices (they may arise at the very start)
-corrected_peaks = corrected_peaks[corrected_peaks >= 0]
-
-# Convert corrected indices to time
-peak_times = corrected_peaks / SAMPLE_RATE  # seconds
-
-# Convert to distance (meters)
-distances = (peak_times * 3e8) / 2  # divide by 2 for round trip
-
-
-print("Detected distances (m):", distances)
-
-delta = np.array(targets) - np.array(distances)
-print(f"Distance error: {delta}")
-
+if __name__ == "__main__":
+    main()

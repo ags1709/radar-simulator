@@ -39,3 +39,8 @@ After taking that into consideration calculated distances are within 2 meters of
 radar range: R = c * t / 2
 
 
+## Future improvements
+Doppler
+Radar Cross Section (RCS)
+Better range resolution (Better distinguish close targets)
+
