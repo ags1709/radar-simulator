@@ -1,15 +1,4 @@
-"""
-Signal Processing Module for Radar Applications
-
-This module implements core radar signal processing algorithms including:
-- Matched filtering echo detection
-- Constant False Alarm Rate (CFAR) detection
-- Performance analysis utilities
-"""
-
 import numpy as np
-from scipy.signal import find_peaks, windows
-from typing import Tuple, Optional, Dict, List
 
 
 def matched_filter(received_signal: np.ndarray, 

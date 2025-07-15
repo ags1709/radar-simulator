@@ -1,11 +1,3 @@
-"""
-Radar Signal Processing Simulator - Main Demonstration Script
-
-You can now control the run from the command line:
-
-    python main.py -s dense --show-pulse
-"""
-
 import argparse
 
 from radar.targets import create_target_scenario
@@ -21,7 +13,7 @@ from radar.radarSimulator import RadarSimulator
 # ----------------------------------------------------------------------
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Radar signal‑processing pipeline demo"
+        description="Radar signal‑processing pipeline"
     )
     parser.add_argument(
         "-s",
@@ -97,7 +89,7 @@ def main() -> None:
     radar.analyze_performance(targets, distances)
 
     # ------------------------------------------------------------------
-    # 7. Comprehensive visualisation
+    # 7. Visualisation
     # ------------------------------------------------------------------
     plot_comprehensive_results(
         received_signal=received_signal,

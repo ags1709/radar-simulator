@@ -1,16 +1,6 @@
-"""
-Visualization Module for Radar Signal Processing
-
-Plots for radar signal analysis including:
-- Complex signal visualization
-- Comprehensive visualization of the signal processing
-- Detection performance metrics
-"""
-
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.gridspec import GridSpec
-from matplotlib.patches import Rectangle
 import seaborn as sns
 
 sns.set_theme(style="darkgrid")

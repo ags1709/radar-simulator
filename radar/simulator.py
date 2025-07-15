@@ -1,55 +1,5 @@
-"""
-Radar Pulse Generation Module
-
-This module provides various radar waveform generation capabilities:
-- Simple CW pulses
-- Linear Frequency Modulation (LFM/Chirp) pulses
-- Non-linear FM pulses
-- Phase-coded pulses (Barker codes)
-- Stepped frequency waveforms
-
-Author: [Your Name]
-Date: January 2025
-"""
-
 import numpy as np
-from typing import Tuple, Optional, Union
-
-
-def generate_pulse(frequency: float = 5e3,
-                  duration: float = 0.1e-3,
-                  sample_rate: float = 1e6,
-                  phase: float = 0.0) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Generate a simple continuous wave (CW) radar pulse.
-    
-    This creates a basic sinusoidal pulse at a fixed frequency,
-    primarily used for Doppler-only radars or as a reference.
-    
-    Parameters
-    ----------
-    frequency : float
-        Carrier frequency in Hz (default 5 kHz).
-    duration : float
-        Pulse duration in seconds (default 0.1 ms).
-    sample_rate : float
-        Sampling frequency in Hz (default 1 MHz).
-    phase : float
-        Initial phase in radians (default 0).
-    
-    Returns
-    -------
-    tuple
-        (pulse, time_axis) where pulse is the generated signal
-        and time_axis is the corresponding time vector.
-    """
-    # Generate time axis
-    t = np.arange(0, duration, 1/sample_rate)
-    
-    # Generate complex exponential (I/Q representation)
-    pulse = np.exp(1j * (2 * np.pi * frequency * t + phase))
-    
-    return pulse, t
+from typing import Tuple, Optional
 
 
 def generate_lfm_pulse(start_freq: float = 0.0,

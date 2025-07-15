@@ -1,15 +1,3 @@
-"""
-Radar Simulator Module
-
-This module provides the class for the radar simulator which runs simulation.
-
-"""
-
-import numpy as np
-import time
-from radar.simulator import generate_lfm_pulse
-from radar.targets import simulate_echoes
-from radar.signalProcessing import matched_filter, ca_cfar_detector
 import numpy as np, time
 from radar.simulator import generate_lfm_pulse
 from radar.targets import simulate_echoes

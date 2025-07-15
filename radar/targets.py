@@ -1,14 +1,5 @@
-"""
-Radar Target Simulation Module
-
-This module provides realistic simulation of radar echoes including:
-- Range-dependent signal attenuation 
-- Complex Gaussian noise modeling
-- Multiple target scenarios
-"""
-
 import numpy as np
-from typing import List, Tuple, Optional, Union
+from typing import List, Tuple, Union
 
 
 def simulate_echoes(pulse: np.ndarray,
