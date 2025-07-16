@@ -8,7 +8,7 @@ This project simulates a complete radar signal processing chain from pulse gener
 
 ### Key Features
 
-- **LFM Chirp Generation**: Linear Frequency Modulation pulse with windowing
+- **LFM Chirp Generation**: Linear Frequency Modulation pulse with windowing as transmit signal
 - **Realistic Echo Simulation**: Models propagation delays, path loss (1/R²), and thermal noise
 - **Matched Filter Processing**: Optimal signal detection with pulse compression
 - **Coherent Integration**: Multi-pulse processing for improved SNR
@@ -47,8 +47,8 @@ This project simulates a complete radar signal processing chain from pulse gener
 - **Bandwidth**: 20 MHz  
 - **Pulse Duration**: 10 μs
 - **PRF**: 5 kHz
-- **Theoretical Range Resolution**: 7.5 meters (Theoretical Value: $c/2B$)
-- **Theoretical Maximum Unambiguous Range**: 30 km (Theoretical Value: $cT/2$)
+- **Theoretical Range Resolution**: 7.5 meters ($c/2B$)
+- **Theoretical Maximum Unambiguous Range**: 30 km ($cT/2$)
 - **Detection Accuracy**: ±2 meters typical
 
 ## Example Results
