@@ -128,7 +128,7 @@ def create_target_scenario(scenario_type: str = "simple") -> List[Tuple[float, f
     """
     scenarios = {
         "simple": [
-            1600,   
+            1400,   
             2500,   
             4000,   
         ],
