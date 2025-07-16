@@ -19,7 +19,7 @@ This project simulates a complete radar signal processing chain from pulse gener
 ## Algorithm Implementation Details
 
 ### 1. LFM Pulse Generation
-- **Chirp Signal**: $s(t) = exp(j2π(f₀t + ½kt²))$
+- **Chirp Signal**: $s(t) = exp(j2π(f_0t + ½kt²))$
 - **Windowing**: Hanning, Hamming, or Blackman for sidelobe control
 - **Bandwidth**: 20 MHz providing theoretical 7.5m range resolution
 
