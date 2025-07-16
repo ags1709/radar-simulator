@@ -64,13 +64,6 @@ def plot_complex_pulse(pulse, t, title="Complex Pulse"):
     ax3.set_title("Instantaneous Frequency", fontsize=12)
     ax3.grid(True, alpha=0.3)
     
-    # Add chirp rate annotation
-    chirp_rate = (inst_freq[-1] - inst_freq[0]) / ((t[-1] - t[0]) * 1e6)
-    ax3.text(0.02, 0.95, f'Chirp rate: {chirp_rate:.1f} MHz/μs', 
-            transform=ax3.transAxes, 
-            verticalalignment='top',
-            bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.7))
-    
     plt.suptitle(f"LFM Chirp Analysis - Bandwidth: 20 MHz, Duration: 10 μs", 
                  fontsize=14, fontweight='bold')
     plt.show()
@@ -195,6 +188,6 @@ def plot_comprehensive_results(received_signal, mf_single, integrated, n_pulses,
             bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.8),
             fontsize=11)
     
-    plt.suptitle("Radar Signal Processing Results - Complete Analysis", 
+    plt.suptitle("Radar Signal Processing Results", 
                 fontsize=14, fontweight='bold')
     plt.show()
