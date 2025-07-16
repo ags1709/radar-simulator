@@ -127,8 +127,8 @@ class RadarSimulator:
         if len(detected_distances) == len(true_targets):
             errors = detected_distances - true_targets
             print(f"\nRange errors (m): {errors}")
-            print(f"Mean error: {np.mean(errors)} m")
-            print(f"RMS error: {np.sqrt(np.mean(errors**2))} m")
+            print(f"Mean error: {np.mean(errors):.2f} m")
+            print(f"RMS error: {np.sqrt(np.mean(errors**2)):.2f} m")
             
         else:
             print(f"\nWarning: Detected {len(detected_distances)} targets, "
