@@ -43,11 +43,11 @@ def main() -> None:
     # 1. Instantiate simulator
     # ------------------------------------------------------------------
     radar = RadarSimulator(
-        sample_rate=100e6,
-        bandwidth=20e6,
-        pulse_duration=10e-6,
+        sample_rate=100e6, # 100 MHz
+        bandwidth=20e6, # 20 MHz
+        pulse_duration=10e-6, # 10 μs
         n_pulses=128,
-        prf=5e3,
+        prf=5e3, # 5 KHz
     )
 
     # ------------------------------------------------------------------
