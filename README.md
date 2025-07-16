@@ -15,17 +15,8 @@ This project simulates a complete radar signal processing chain from pulse gener
 - **CA-CFAR Detection**: Adaptive threshold detection maintaining constant false alarm rate
 - **Performance Analysis**: Range accuracy and detection statistics
 
-## Technical Specifications
 
-- **Sample Rate**: 100 MHz
-- **Bandwidth**: 20 MHz  
-- **Pulse Duration**: 10 μs
-- **PRF**: 5 kHz
-- **Theoretical Range Resolution**: 7.5 meters (Theoretical Value: $c/2B$)
-- **Theoretical Maximum Unambiguous Range**: 30 km (Theoretical Value: $cT/2$)
-- **Detection Accuracy**: ±2 meters typical
-
-## Algorithm Implementation
+## Algorithm Implementation Details
 
 ### 1. LFM Pulse Generation
 - **Chirp Signal**: $s(t) = exp(j2π(f₀t + ½kt²))$
@@ -43,12 +34,22 @@ This project simulates a complete radar signal processing chain from pulse gener
 
 ### 4. Coherent Integration
 - **Multi-Pulse Processing**: Coherent addition of N pulses
-- **SNR Improvement**: Theoretical gain = $\sqrt{N}$
+<!-- - **SNR Improvement**: Theoretical gain = $\sqrt{N}$ -->
 
 ### 5. CA-CFAR Detection
 - **Adaptive Threshold**: T = α × (noise estimate)
 - **Cell Averaging**: Uses surrounding cells for noise estimation
 - **False Alarm Control**: Maintains constant Pfa regardless of noise level
+
+## Technical Specifications
+
+- **Sample Rate**: 100 MHz
+- **Bandwidth**: 20 MHz  
+- **Pulse Duration**: 10 μs
+- **PRF**: 5 kHz
+- **Theoretical Range Resolution**: 7.5 meters (Theoretical Value: $c/2B$)
+- **Theoretical Maximum Unambiguous Range**: 30 km (Theoretical Value: $cT/2$)
+- **Detection Accuracy**: ±2 meters typical
 
 ## Example Results
 
@@ -72,7 +73,7 @@ RMS error: 0.5 m
 ### Project Structure
 
 ```
-radar-simulator/
+radarSimulator/
 ├── radar/
 │   ├── __init__.py
 │   ├── radarSimulator.py    # Main simulation class
@@ -90,8 +91,8 @@ radar-simulator/
 ### Installation
 
 ```bash
-git clone LINK HERE
-cd radarSimulation
+git clone https://github.com/ags1709/radarSimulator.git
+cd radarSimulator
 pip install -r requirements.txt
 ```
 
@@ -108,10 +109,3 @@ python main.py --s extended
 # Visualize transmitted pulse
 python main.py --show-pulse
 ```
-
-
-## Future improvements
-* Doppler
-* Radar Cross Section (RCS)
-* Better range resolution (Better distinguish close targets)
-
