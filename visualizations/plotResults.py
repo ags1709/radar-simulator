@@ -187,8 +187,8 @@ def plot_comprehensive_results(received_signal, mf_single, integrated, n_pulses,
     textstr = f'Targets Detected: {len(distances)}/{len(targets)}\n'
     if len(distances) == len(targets):
         errors = np.array(distances) - np.array(targets)
-        textstr += f'Mean Error: {np.mean(errors):.1f} m\n'
-        textstr += f'RMS Error: {np.sqrt(np.mean(errors**2)):.1f} m'
+        textstr += f'Mean Error: {np.mean(errors):.2f} m\n'
+        textstr += f'RMS Error: {np.sqrt(np.mean(errors**2)):.2f} m'
     
     ax4.text(0.02, 0.95, textstr, transform=ax4.transAxes, 
             verticalalignment='top',
