@@ -90,7 +90,7 @@ radarSimulator/
 └── README.md
 ```
 
-### Installation
+### Getting the Code
 
 ```bash
 git clone https://github.com/ags1709/radar-simulator.git
