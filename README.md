@@ -49,7 +49,7 @@ This project simulates a complete radar signal processing chain from pulse gener
 - **PRF**: 5 kHz
 - **Theoretical Range Resolution**: 7.5 meters ($c/2B$)
 - **Theoretical Maximum Unambiguous Range**: 30 km ($cT/2$)
-- **Detection Accuracy**: ±2 meters typical
+- **Detection Accuracy**: ± 1 meters typical
 
 ## Example Results
 
