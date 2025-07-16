@@ -93,7 +93,7 @@ radarSimulator/
 ### Installation
 
 ```bash
-git clone https://github.com/ags1709/radarSimulator.git
+git clone https://github.com/ags1709/radar-simulator.git
 cd radarSimulator
 pip install -r requirements.txt
 ```
