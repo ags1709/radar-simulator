@@ -19,7 +19,7 @@ def _parse_args() -> argparse.Namespace:
         "-s",
         "--scenario",
         choices=["simple", "dense", "extended"],
-        default="dense",
+        default="extended",
         help="Target distribution to simulate",
     )
     parser.add_argument(
